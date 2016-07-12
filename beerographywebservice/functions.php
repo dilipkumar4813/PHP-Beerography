@@ -10,12 +10,20 @@
 		$i=0;
 
 		$cursor = selection("beers",$doc);
+		$sortArray = array();
+		$toSort = array();
+		foreach ($cursor as $task) {
+			array_push($sortArray, $task);
+			array_push($toSort, $task['title']);
+		}
+
+		array_multisort($toSort,SORT_ASC,$sortArray);
 
 		$str = "{\"beers\":[";
-		foreach($cursor as $task){
-			$str.="{\"id\":\"".$task['_id']."\",";
-			$str.="\"title\":\"".$task['title']."\",";
-			$str.="\"image\":\"".$task['image']."\"},";
+		foreach($sortArray as $tk){
+			$str.="{\"id\":\"".$tk['_id']."\",";
+			$str.="\"title\":\"".$tk['title']."\",";
+			$str.="\"image\":\"".$tk['image']."\"},";
 			$i++;
 		}
 
